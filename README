@@ -1,0 +1,24 @@
+#steps to create the Docker Image
+1.install Docker deskstop in your system
+2.add the file name in pom.xml in build tag  like>><finalName>login_app</finalName>
+  
+3.go to the project folder open cmd or git bash run the below command
+   mvn clean package
+   you can see the jar will generated in target folder with file name 
+   that you gave in step 2
+4.create the docker file in project add below details
+  FROM openjdk:8  >>jdk that you are using either 8/11/17
+
+  COPY target/login_app.jar /user/app/  >>copy the jar from your location to docker location
+
+  WORKDIR /user/app/
+
+  ENTRYPOINT ["java","-jar","login_app.jar"]
+  
+ 5.build the docker image (note docker software mast be in running mode)
+   docker images >> check weather docker image available or not
+   docker build -t loginApp . >>build the docker image as loginApp name
+   docker images >> check weather docker image created or not 
+   docker run -d -p 8080:8080  loginApp >>map container port to host machine (hostname:springboot port number)
+   docker ps >> check the container running or not
+   localhost:8080 >>check weather its working or not
